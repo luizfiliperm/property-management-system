@@ -24,6 +24,7 @@ public class PropertyDto {
     public PropertyDto(Property property){
         this.id = property.getId();
         this.name = property.getName();
+        this.contact = property.getContact();
         this.numberOfUnits = property.getNumberOfUnits();
         this.description = property.getDescription();
         this.address = new AddressDto(property.getAddress());
