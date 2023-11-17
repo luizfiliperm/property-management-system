@@ -27,4 +27,8 @@ public class Property {
 
     @Column(name = "description")
     private String description;
+
+    @OneToOne
+    @JoinColumn(name = "address_id")
+    private Address address;
 }

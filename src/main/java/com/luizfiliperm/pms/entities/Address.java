@@ -28,4 +28,7 @@ public class Address {
 
     @Column(name = "state")
     private String state;
+
+    @OneToOne(mappedBy = "address", cascade = CascadeType.ALL, orphanRemoval = true)
+    private Property property;
 }
