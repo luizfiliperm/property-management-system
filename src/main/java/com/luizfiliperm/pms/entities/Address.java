@@ -20,6 +20,9 @@ public class Address {
     @Column(name = "cep")
     private String cep;
 
+    @Column(name = "number")
+    private String number;
+
     @Column(name = "street")
     private String street;
 
