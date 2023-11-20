@@ -33,7 +33,6 @@ public class PropertyServiceTest {
         assertEquals(propertyDto.getAddress().getStreet(), savedProperty.getAddress().getStreet());
         assertEquals(propertyDto.getAddress().getCity(), savedProperty.getAddress().getCity());
         assertEquals(propertyDto.getAddress().getState(), savedProperty.getAddress().getState());
-
     }
 
     @Test
@@ -41,6 +40,13 @@ public class PropertyServiceTest {
         PropertyDto savedPropertyDto = propertyService.register(PropertyCreator.getPropertyDto());
 
         assertEquals(propertyService.findById(savedPropertyDto.getId()), savedPropertyDto);
+    }
+
+    @Test
+    public void testFindAll(){
+        PropertyDto savedPropertyDto = propertyService.register(PropertyCreator.getPropertyDto());
+
+        assertEquals(propertyService.findAll(0, 1, "name", "asc").getContent().get(0), savedPropertyDto);
 
     }
 
