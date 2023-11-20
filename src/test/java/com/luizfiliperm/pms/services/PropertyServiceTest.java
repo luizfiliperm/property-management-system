@@ -1,7 +1,7 @@
 package com.luizfiliperm.pms.services;
 
-import com.luizfiliperm.pms.dtos.AddressDto;
 import com.luizfiliperm.pms.dtos.PropertyDto;
+import com.luizfiliperm.pms.property.PropertyCreator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -19,7 +19,7 @@ public class PropertyServiceTest {
 
     @Test
     public void testRegister(){
-        PropertyDto propertyDto = getPropertyDto();
+        PropertyDto propertyDto = PropertyCreator.getPropertyDto();
 
         PropertyDto savedProperty = propertyService.register(propertyDto);
 
@@ -38,28 +38,11 @@ public class PropertyServiceTest {
 
     @Test
     public void testFindById(){
-        PropertyDto savedPropertyDto = propertyService.register(getPropertyDto());
+        PropertyDto savedPropertyDto = propertyService.register(PropertyCreator.getPropertyDto());
 
         assertEquals(propertyService.findById(savedPropertyDto.getId()), savedPropertyDto);
 
     }
 
-    private static PropertyDto getPropertyDto() {
-        AddressDto addressDto = new AddressDto();
 
-        addressDto.setCep("30203200");
-        addressDto.setNumber("42");
-        addressDto.setStreet("Nobody street");
-        addressDto.setCity("City of tests");
-        addressDto.setState("PB");
-
-        PropertyDto propertyDto = new PropertyDto();
-
-        propertyDto.setName("Test Hotel");
-        propertyDto.setContact("+5588999999999");
-        propertyDto.setNumberOfUnits(0);
-        propertyDto.setDescription("No description");
-        propertyDto.setAddress(addressDto);
-        return propertyDto;
-    }
 }

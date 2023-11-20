@@ -3,6 +3,7 @@ package com.luizfiliperm.pms.controllers;
 import com.luizfiliperm.pms.dtos.PropertyDto;
 import com.luizfiliperm.pms.services.PropertyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -15,7 +16,7 @@ public class PropertyController {
 
     @PostMapping
     public ResponseEntity<PropertyDto> saveProperty(@RequestBody PropertyDto propertyDto){
-        return ResponseEntity.ok(propertyService.register(propertyDto));
+        return ResponseEntity.status(HttpStatus.CREATED).body(propertyService.register(propertyDto));
     }
 
     @GetMapping("/{propertyId}")
