@@ -26,7 +26,7 @@ public class PropertyServiceImpl implements PropertyService {
     AddressRepository addressRepository;
 
     @Override
-    public PropertyDto register(PropertyDto propertyDto) {
+    public PropertyDto save(PropertyDto propertyDto) {
         Address address = propertyDto.getAddress().convertToAddress();
         addressRepository.save(address);
 
@@ -54,5 +54,11 @@ public class PropertyServiceImpl implements PropertyService {
 
         List<PropertyDto> content = propertyList.stream().map(PropertyDto::new).toList();
         return new PageResponse<PropertyDto>(content, properties.getNumber(), properties.getSize(), properties.getTotalElements(), properties.getTotalPages(), properties.isLast());
+    }
+
+
+    @Override
+    public void remove(Long id) {
+
     }
 }

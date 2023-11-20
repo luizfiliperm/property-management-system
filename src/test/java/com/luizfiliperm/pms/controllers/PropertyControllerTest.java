@@ -34,7 +34,7 @@ public class PropertyControllerTest {
     public void testAddProperty() throws Exception {
         PropertyDto mockProperty = PropertyCreator.getPropertyDtoResponse();
 
-        when(propertyService.register(any(PropertyDto.class))).thenReturn(mockProperty);
+        when(propertyService.save(any(PropertyDto.class))).thenReturn(mockProperty);
 
         mockMvc.perform(post("/pms/properties")
                 .contentType(MediaType.APPLICATION_JSON)

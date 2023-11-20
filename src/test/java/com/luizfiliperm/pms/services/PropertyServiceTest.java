@@ -21,7 +21,7 @@ public class PropertyServiceTest {
     public void testRegister(){
         PropertyDto propertyDto = PropertyCreator.getPropertyDto();
 
-        PropertyDto savedProperty = propertyService.register(propertyDto);
+        PropertyDto savedProperty = propertyService.save(propertyDto);
 
         assertNotNull(savedProperty);
         assertEquals(propertyDto.getName(), savedProperty.getName());
@@ -37,14 +37,14 @@ public class PropertyServiceTest {
 
     @Test
     public void testFindById(){
-        PropertyDto savedPropertyDto = propertyService.register(PropertyCreator.getPropertyDto());
+        PropertyDto savedPropertyDto = propertyService.save(PropertyCreator.getPropertyDto());
 
         assertEquals(propertyService.findById(savedPropertyDto.getId()), savedPropertyDto);
     }
 
     @Test
     public void testFindAll(){
-        PropertyDto savedPropertyDto = propertyService.register(PropertyCreator.getPropertyDto());
+        PropertyDto savedPropertyDto = propertyService.save(PropertyCreator.getPropertyDto());
 
         assertEquals(propertyService.findAll(0, 1, "name", "asc").getContent().get(0), savedPropertyDto);
 
