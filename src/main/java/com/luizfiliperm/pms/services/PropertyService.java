@@ -11,5 +11,5 @@ public interface PropertyService {
 
     PageResponse<PropertyDto> findAll(int page, int size, String sortBy, String sortDir);
 
-    void remove(Long id);
+    void delete(Long id);
 }

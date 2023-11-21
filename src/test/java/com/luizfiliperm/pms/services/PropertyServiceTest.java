@@ -7,8 +7,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.test.context.ActiveProfiles;
 
-import static org.junit.jupiter.api.Assertions.assertEquals;
-import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.*;
 
 @SpringBootTest
 @ActiveProfiles("test")
@@ -49,6 +48,6 @@ public class PropertyServiceTest {
         assertEquals(propertyService.findAll(0, 1, "name", "asc").getContent().get(0), savedPropertyDto);
 
     }
-
+    
 
 }

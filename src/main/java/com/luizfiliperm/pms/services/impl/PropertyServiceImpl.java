@@ -7,6 +7,7 @@ import com.luizfiliperm.pms.entities.Property;
 import com.luizfiliperm.pms.repositories.AddressRepository;
 import com.luizfiliperm.pms.repositories.PropertyRepository;
 import com.luizfiliperm.pms.services.PropertyService;
+import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -27,11 +28,7 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public PropertyDto save(PropertyDto propertyDto) {
-        Address address = propertyDto.getAddress().convertToAddress();
-        addressRepository.save(address);
-
         Property property = propertyDto.convertToProperty();
-        property.setAddress(address);
         return new PropertyDto(propertyRepository.save(property));
 
     }
@@ -58,7 +55,9 @@ public class PropertyServiceImpl implements PropertyService {
 
 
     @Override
-    public void remove(Long id) {
+    @Transactional
+    public void delete(Long id) {
+        propertyRepository.deleteById(id);
 
     }
 }

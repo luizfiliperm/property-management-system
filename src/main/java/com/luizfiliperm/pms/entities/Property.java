@@ -28,7 +28,7 @@ public class Property {
     @Column(name = "description")
     private String description;
 
-    @OneToOne
+    @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "address_id")
     private Address address;
 }

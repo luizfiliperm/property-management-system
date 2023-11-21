@@ -33,4 +33,10 @@ public class PropertyController {
                                                              @RequestParam(value = "sortDir", defaultValue = AppConstants.DEFAULT_SORT_DIRECTION, required = false) String sortDir) {
         return ResponseEntity.status(HttpStatus.OK).body(propertyService.findAll(pageNo, pageSize, sortBy, sortDir));
     }
+
+    @DeleteMapping("/{propertyId}")
+    public ResponseEntity<Void> deletePropertyById(@PathVariable Long propertyId){
+        propertyService.delete(propertyId);
+        return ResponseEntity.status(HttpStatus.OK).build();
+    }
 }
