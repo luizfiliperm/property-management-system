@@ -2,8 +2,8 @@ package com.luizfiliperm.pms.services.impl;
 
 import com.luizfiliperm.pms.dtos.PageResponse;
 import com.luizfiliperm.pms.dtos.PropertyDto;
-import com.luizfiliperm.pms.entities.Address;
 import com.luizfiliperm.pms.entities.Property;
+import com.luizfiliperm.pms.exceptions.PmsException;
 import com.luizfiliperm.pms.repositories.AddressRepository;
 import com.luizfiliperm.pms.repositories.PropertyRepository;
 import com.luizfiliperm.pms.services.PropertyService;
@@ -13,6 +13,7 @@ import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.domain.Sort;
+import org.springframework.http.HttpStatus;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -35,7 +36,7 @@ public class PropertyServiceImpl implements PropertyService {
 
     @Override
     public PropertyDto findById(Long id) {
-        return new PropertyDto(propertyRepository.findById(id).orElseThrow());
+        return new PropertyDto(propertyRepository.findById(id).orElseThrow(() -> new PmsException("Property not found with id: " + id, HttpStatus.NOT_FOUND)));
     }
 
     @Override
