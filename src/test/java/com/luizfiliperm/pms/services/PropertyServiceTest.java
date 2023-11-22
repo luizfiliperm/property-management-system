@@ -1,10 +1,12 @@
 package com.luizfiliperm.pms.services;
 
 import com.luizfiliperm.pms.dtos.PropertyDto;
+import com.luizfiliperm.pms.exceptions.PmsException;
 import com.luizfiliperm.pms.property.PropertyCreator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.http.HttpStatus;
 import org.springframework.test.context.ActiveProfiles;
 
 import static org.junit.jupiter.api.Assertions.*;
@@ -48,6 +50,21 @@ public class PropertyServiceTest {
         assertEquals(propertyService.findAll(0, 1, "name", "asc").getContent().get(0), savedPropertyDto);
 
     }
-    
+
+    @Test
+    public void testDelete(){
+        PropertyDto savedPropertyDto = propertyService.save(PropertyCreator.getPropertyDto());
+
+        propertyService.delete(savedPropertyDto.getId());
+
+        assertThrows(PmsException.class, () -> propertyService.findById(savedPropertyDto.getId()));
+
+        try{
+            propertyService.findById(savedPropertyDto.getId());
+        }catch (PmsException e){
+            assertEquals(HttpStatus.NOT_FOUND, e.getHttpStatus());
+        }
+    }
+
 
 }
