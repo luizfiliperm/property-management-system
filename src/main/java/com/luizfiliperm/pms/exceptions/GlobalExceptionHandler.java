@@ -1,6 +1,7 @@
 package com.luizfiliperm.pms.exceptions;
 
 import jakarta.servlet.http.HttpServletRequest;
+import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.ControllerAdvice;
@@ -17,8 +18,8 @@ public class GlobalExceptionHandler {
         return getResponseEntity(ex.getHttpStatus(), ex.getMessage());
     }
 
-    @ExceptionHandler({MethodArgumentTypeMismatchException.class})
-    ResponseEntity<ErrorMessage> handle(MethodArgumentTypeMismatchException ex){
+    @ExceptionHandler({MethodArgumentTypeMismatchException.class, PropertyReferenceException.class})
+    ResponseEntity<ErrorMessage> handleBadRequestExceptions(Exception ex){
         return getResponseEntity(HttpStatus.BAD_REQUEST, ex.getMessage());
 
     }
