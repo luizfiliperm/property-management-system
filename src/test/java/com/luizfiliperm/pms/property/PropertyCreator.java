@@ -1,10 +1,11 @@
 package com.luizfiliperm.pms.property;
 
 import com.luizfiliperm.pms.dtos.AddressDto;
-import com.luizfiliperm.pms.dtos.PropertyDto;
+import com.luizfiliperm.pms.dtos.property.PropertyDtoReceive;
+import com.luizfiliperm.pms.dtos.property.PropertyDtoResponse;
 
 public class PropertyCreator {
-    public static PropertyDto getPropertyDto() {
+    public static PropertyDtoReceive getPropertyReceive() {
         AddressDto addressDto = new AddressDto();
 
         addressDto.setCep("30203200");
@@ -13,21 +14,21 @@ public class PropertyCreator {
         addressDto.setCity("City of tests");
         addressDto.setState("PB");
 
-        PropertyDto propertyDto = new PropertyDto();
+        PropertyDtoReceive propertyDtoReceive = new PropertyDtoReceive();
 
-        propertyDto.setName("Test Hotel");
-        propertyDto.setContact("+5588999999999");
-        propertyDto.setNumberOfUnits(0);
-        propertyDto.setDescription("No description");
-        propertyDto.setAddress(addressDto);
-        return propertyDto;
+        propertyDtoReceive.setName("Test Hotel");
+        propertyDtoReceive.setContact("+5588999999999");
+        propertyDtoReceive.setNumberOfUnits(0);
+        propertyDtoReceive.setDescription("No description");
+        propertyDtoReceive.setAddress(addressDto);
+        return propertyDtoReceive;
     }
 
-    public static PropertyDto getPropertyDtoResponse(){
-        PropertyDto propertyDto = getPropertyDto();
+    public static PropertyDtoResponse getPropertyDtoResponse(){
+        PropertyDtoResponse propertyDtoResponse = new PropertyDtoResponse(getPropertyReceive().convertToProperty()) ;
 
-        propertyDto.setId(1L);
-        return propertyDto;
+        propertyDtoResponse.setId(1L);
+        return propertyDtoResponse;
     }
 
 

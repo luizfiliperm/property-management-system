@@ -1,6 +1,7 @@
 package com.luizfiliperm.pms.controllers;
 
-import com.luizfiliperm.pms.dtos.PropertyDto;
+import com.luizfiliperm.pms.dtos.property.PropertyDtoReceive;
+import com.luizfiliperm.pms.dtos.property.PropertyDtoResponse;
 import com.luizfiliperm.pms.exceptions.ErrorMessage;
 import com.luizfiliperm.pms.exceptions.PmsException;
 import com.luizfiliperm.pms.json.JsonConverter;
@@ -18,7 +19,6 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.ArgumentMatchers.any;
-import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -36,13 +36,13 @@ public class PropertyControllerTest {
 
     @Test
     public void testAddProperty() throws Exception {
-        PropertyDto mockProperty = PropertyCreator.getPropertyDtoResponse();
+        PropertyDtoResponse mockProperty = PropertyCreator.getPropertyDtoResponse();
 
-        when(propertyService.save(any(PropertyDto.class))).thenReturn(mockProperty);
+        when(propertyService.save(any(PropertyDtoReceive.class))).thenReturn(mockProperty);
 
         mockMvc.perform(post("/pms/properties")
                 .contentType(MediaType.APPLICATION_JSON)
-                .content(JsonConverter.convertToJson(PropertyCreator.getPropertyDto())))
+                .content(JsonConverter.convertToJson(PropertyCreator.getPropertyReceive())))
                 .andExpect(status().isCreated())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.id", is(notNullValue())))
@@ -61,7 +61,7 @@ public class PropertyControllerTest {
 
     @Test
     public void testGetPropertyById() throws Exception {
-        PropertyDto mockProperty = PropertyCreator.getPropertyDtoResponse();
+        PropertyDtoResponse mockProperty = PropertyCreator.getPropertyDtoResponse();
 
         when(propertyService.findById(1L)).thenReturn(mockProperty);
 

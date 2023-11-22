@@ -1,7 +1,8 @@
 package com.luizfiliperm.pms.services.impl;
 
 import com.luizfiliperm.pms.dtos.PageResponse;
-import com.luizfiliperm.pms.dtos.PropertyDto;
+import com.luizfiliperm.pms.dtos.property.PropertyDtoReceive;
+import com.luizfiliperm.pms.dtos.property.PropertyDtoResponse;
 import com.luizfiliperm.pms.entities.Property;
 import com.luizfiliperm.pms.exceptions.PmsException;
 import com.luizfiliperm.pms.repositories.AddressRepository;
@@ -28,19 +29,19 @@ public class PropertyServiceImpl implements PropertyService {
     AddressRepository addressRepository;
 
     @Override
-    public PropertyDto save(PropertyDto propertyDto) {
-        Property property = propertyDto.convertToProperty();
-        return new PropertyDto(propertyRepository.save(property));
+    public PropertyDtoResponse save(PropertyDtoReceive propertyDtoReceive) {
+        Property property = propertyDtoReceive.convertToProperty();
+        return new PropertyDtoResponse(propertyRepository.save(property));
 
     }
 
     @Override
-    public PropertyDto findById(Long id) {
-        return new PropertyDto(propertyRepository.findById(id).orElseThrow(() -> new PmsException("Property not found with id: " + id, HttpStatus.NOT_FOUND)));
+    public PropertyDtoResponse findById(Long id) {
+        return new PropertyDtoResponse(propertyRepository.findById(id).orElseThrow(() -> new PmsException("Property not found with id: " + id, HttpStatus.NOT_FOUND)));
     }
 
     @Override
-    public PageResponse<PropertyDto> findAll(int page, int size, String sortBy, String sortDir) {
+    public PageResponse<PropertyDtoResponse> findAll(int page, int size, String sortBy, String sortDir) {
         Sort sort = sortDir.equalsIgnoreCase(Sort.Direction.ASC.name()) ? Sort.by(sortBy).ascending() :
                 Sort.by(sortBy).descending();
 
@@ -50,8 +51,8 @@ public class PropertyServiceImpl implements PropertyService {
 
         List<Property> propertyList = properties.getContent();
 
-        List<PropertyDto> content = propertyList.stream().map(PropertyDto::new).toList();
-        return new PageResponse<PropertyDto>(content, properties.getNumber(), properties.getSize(), properties.getTotalElements(), properties.getTotalPages(), properties.isLast());
+        List<PropertyDtoResponse> content = propertyList.stream().map(PropertyDtoResponse::new).toList();
+        return new PageResponse<PropertyDtoResponse>(content, properties.getNumber(), properties.getSize(), properties.getTotalElements(), properties.getTotalPages(), properties.isLast());
     }
 
 
@@ -60,5 +61,22 @@ public class PropertyServiceImpl implements PropertyService {
     public void delete(Long id) {
         propertyRepository.deleteById(id);
 
+    }
+
+    @Override
+    public PropertyDtoResponse updateById(Long id, PropertyDtoReceive propertyDtoReceive) {
+
+        Property property = propertyRepository.findById(id).orElseThrow(() -> new PmsException("Property not found with id: " + id, HttpStatus.NOT_FOUND));
+        property.setName(propertyDtoReceive.getName());
+        property.setContact(propertyDtoReceive.getContact());
+        property.setNumberOfUnits(propertyDtoReceive.getNumberOfUnits());
+        property.setDescription(propertyDtoReceive.getDescription());
+        property.getAddress().setCep(propertyDtoReceive.getAddress().getCep());
+        property.getAddress().setNumber(propertyDtoReceive.getAddress().getNumber());
+        property.getAddress().setStreet(propertyDtoReceive.getAddress().getStreet());
+        property.getAddress().setCity(propertyDtoReceive.getAddress().getCity());
+        property.getAddress().setState(propertyDtoReceive.getAddress().getState());
+
+        return new PropertyDtoResponse(propertyRepository.save(property));
     }
 }

@@ -1,5 +1,6 @@
-package com.luizfiliperm.pms.dtos;
+package com.luizfiliperm.pms.dtos.property;
 
+import com.luizfiliperm.pms.dtos.AddressDto;
 import com.luizfiliperm.pms.entities.Property;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -8,8 +9,7 @@ import lombok.NoArgsConstructor;
 @AllArgsConstructor
 @NoArgsConstructor
 @Data
-public class PropertyDto {
-    private Long id;
+public class PropertyDtoReceive {
 
     private String name;
 
@@ -21,8 +21,7 @@ public class PropertyDto {
 
     private AddressDto address;
 
-    public PropertyDto(Property property){
-        this.id = property.getId();
+    public PropertyDtoReceive(Property property){
         this.name = property.getName();
         this.contact = property.getContact();
         this.numberOfUnits = property.getNumberOfUnits();
@@ -31,6 +30,6 @@ public class PropertyDto {
     }
 
     public Property convertToProperty(){
-        return new Property(this.id, this.name, this.contact, this.numberOfUnits, this.description, this.address.convertToAddress());
+        return new Property(null, this.name, this.contact, this.numberOfUnits, this.description, this.address.convertToAddress());
     }
 }

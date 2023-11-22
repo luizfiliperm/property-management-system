@@ -1,6 +1,7 @@
 package com.luizfiliperm.pms.services;
 
-import com.luizfiliperm.pms.dtos.PropertyDto;
+import com.luizfiliperm.pms.dtos.property.PropertyDtoResponse;
+import com.luizfiliperm.pms.dtos.property.PropertyDtoReceive;
 import com.luizfiliperm.pms.exceptions.PmsException;
 import com.luizfiliperm.pms.property.PropertyCreator;
 import org.junit.jupiter.api.Test;
@@ -20,47 +21,47 @@ public class PropertyServiceTest {
 
     @Test
     public void testRegister(){
-        PropertyDto propertyDto = PropertyCreator.getPropertyDto();
+        PropertyDtoReceive propertyDtoReceive = PropertyCreator.getPropertyReceive();
 
-        PropertyDto savedProperty = propertyService.save(propertyDto);
+        PropertyDtoResponse savedProperty = propertyService.save(propertyDtoReceive);
 
         assertNotNull(savedProperty);
-        assertEquals(propertyDto.getName(), savedProperty.getName());
-        assertEquals(propertyDto.getContact(), savedProperty.getContact());
-        assertEquals(propertyDto.getNumberOfUnits(), savedProperty.getNumberOfUnits());
-        assertEquals(propertyDto.getDescription(), savedProperty.getDescription());
-        assertEquals(propertyDto.getAddress().getCep(), savedProperty.getAddress().getCep());
-        assertEquals(propertyDto.getAddress().getNumber(), savedProperty.getAddress().getNumber());
-        assertEquals(propertyDto.getAddress().getStreet(), savedProperty.getAddress().getStreet());
-        assertEquals(propertyDto.getAddress().getCity(), savedProperty.getAddress().getCity());
-        assertEquals(propertyDto.getAddress().getState(), savedProperty.getAddress().getState());
+        assertEquals(propertyDtoReceive.getName(), savedProperty.getName());
+        assertEquals(propertyDtoReceive.getContact(), savedProperty.getContact());
+        assertEquals(propertyDtoReceive.getNumberOfUnits(), savedProperty.getNumberOfUnits());
+        assertEquals(propertyDtoReceive.getDescription(), savedProperty.getDescription());
+        assertEquals(propertyDtoReceive.getAddress().getCep(), savedProperty.getAddress().getCep());
+        assertEquals(propertyDtoReceive.getAddress().getNumber(), savedProperty.getAddress().getNumber());
+        assertEquals(propertyDtoReceive.getAddress().getStreet(), savedProperty.getAddress().getStreet());
+        assertEquals(propertyDtoReceive.getAddress().getCity(), savedProperty.getAddress().getCity());
+        assertEquals(propertyDtoReceive.getAddress().getState(), savedProperty.getAddress().getState());
     }
 
     @Test
     public void testFindById(){
-        PropertyDto savedPropertyDto = propertyService.save(PropertyCreator.getPropertyDto());
+        PropertyDtoResponse savedPropertyDtoResponse = propertyService.save(PropertyCreator.getPropertyReceive());
 
-        assertEquals(propertyService.findById(savedPropertyDto.getId()), savedPropertyDto);
+        assertEquals(propertyService.findById(savedPropertyDtoResponse.getId()), savedPropertyDtoResponse);
     }
 
     @Test
     public void testFindAll(){
-        PropertyDto savedPropertyDto = propertyService.save(PropertyCreator.getPropertyDto());
+        PropertyDtoResponse savedPropertyDtoResponse = propertyService.save(PropertyCreator.getPropertyReceive());
 
-        assertEquals(propertyService.findAll(0, 1, "name", "asc").getContent().get(0), savedPropertyDto);
+        assertEquals(propertyService.findAll(0, 1, "name", "asc").getContent().get(0), savedPropertyDtoResponse);
 
     }
 
     @Test
     public void testDelete(){
-        PropertyDto savedPropertyDto = propertyService.save(PropertyCreator.getPropertyDto());
+        PropertyDtoResponse savedPropertyDtoResponse = propertyService.save(PropertyCreator.getPropertyReceive());
 
-        propertyService.delete(savedPropertyDto.getId());
+        propertyService.delete(savedPropertyDtoResponse.getId());
 
-        assertThrows(PmsException.class, () -> propertyService.findById(savedPropertyDto.getId()));
+        assertThrows(PmsException.class, () -> propertyService.findById(savedPropertyDtoResponse.getId()));
 
         try{
-            propertyService.findById(savedPropertyDto.getId());
+            propertyService.findById(savedPropertyDtoResponse.getId());
         }catch (PmsException e){
             assertEquals(HttpStatus.NOT_FOUND, e.getHttpStatus());
         }

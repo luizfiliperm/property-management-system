@@ -1,15 +1,18 @@
 package com.luizfiliperm.pms.services;
 
 import com.luizfiliperm.pms.dtos.PageResponse;
-import com.luizfiliperm.pms.dtos.PropertyDto;
+import com.luizfiliperm.pms.dtos.property.PropertyDtoReceive;
+import com.luizfiliperm.pms.dtos.property.PropertyDtoResponse;
 
 public interface PropertyService {
 
-    PropertyDto save(PropertyDto propertyDto);
+    PropertyDtoResponse save(PropertyDtoReceive propertyDtoReceive);
 
-    PropertyDto findById(Long id);
+    PropertyDtoResponse findById(Long id);
 
-    PageResponse<PropertyDto> findAll(int page, int size, String sortBy, String sortDir);
+    PageResponse<PropertyDtoResponse> findAll(int page, int size, String sortBy, String sortDir);
 
     void delete(Long id);
+
+    PropertyDtoResponse updateById(Long id, PropertyDtoReceive propertyDtoResponse);
 }
