@@ -1,6 +1,8 @@
 package com.luizfiliperm.pms.controllers;
 
 import com.luizfiliperm.pms.dtos.PropertyDto;
+import com.luizfiliperm.pms.exceptions.ErrorMessage;
+import com.luizfiliperm.pms.exceptions.PmsException;
 import com.luizfiliperm.pms.json.JsonConverter;
 import com.luizfiliperm.pms.property.PropertyCreator;
 import com.luizfiliperm.pms.services.PropertyService;
@@ -8,6 +10,7 @@ import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
 
@@ -15,6 +18,7 @@ import org.springframework.test.web.servlet.MockMvc;
 import static org.hamcrest.Matchers.is;
 import static org.hamcrest.Matchers.notNullValue;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
@@ -77,5 +81,18 @@ public class PropertyControllerTest {
                 );
     }
 
+    @Test
+    public void testNotFindProperty() throws Exception {
+        ErrorMessage mockError = new ErrorMessage("Property not found with id: 1", 404, System.currentTimeMillis(), "/pms/properties/1");
+        when(propertyService.findById(1L)).thenThrow(new PmsException("Property not found with id: 1", HttpStatus.NOT_FOUND));
+
+        mockMvc.perform(get("/pms/properties/1"))
+                .andExpect(status().isNotFound())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message", is(mockError.getMessage())))
+                .andExpect(jsonPath("$.status", is(mockError.getStatus())))
+                .andExpect(jsonPath("$.path", is(mockError.getPath()))
+                );
+    }
 
 }
