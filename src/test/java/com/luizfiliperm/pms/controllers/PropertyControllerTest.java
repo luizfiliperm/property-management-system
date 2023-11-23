@@ -21,9 +21,9 @@ import org.springframework.web.bind.MethodArgumentNotValidException;
 
 import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
+import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.when;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.post;
+import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.*;
 
 
@@ -97,6 +97,28 @@ public class PropertyControllerTest {
                 );
     }
 
+    @Test
+    public void testUpdateProperty() throws Exception{
+        PropertyDtoResponse mockProperty = PropertyCreator.getPropertyDtoResponse();
+        when(propertyService.updateById(eq(1L), any(PropertyDtoReceive.class))).thenReturn(mockProperty);
+
+        mockMvc.perform(put("/pms/properties/1")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonConverter.convertToJson(PropertyCreator.getPropertyReceive())))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.id", is(notNullValue())))
+                .andExpect(jsonPath("$.name", is("Test Hotel")))
+                .andExpect(jsonPath("$.contact", is("+5588999999999")))
+                .andExpect(jsonPath("$.numberOfUnits", is(0)))
+                .andExpect(jsonPath("$.description", is("No description")))
+                .andExpect(jsonPath("$.address.cep", is("30203200")))
+                .andExpect(jsonPath("$.address.number", is("42")))
+                .andExpect(jsonPath("$.address.street", is("Nobody street")))
+                .andExpect(jsonPath("$.address.city", is("City of tests")))
+                .andExpect(jsonPath("$.address.state", is("PB"))
+                );
+    }
 
     @Test
     public void testNullInput() throws Exception {

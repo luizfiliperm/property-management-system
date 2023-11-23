@@ -67,5 +67,31 @@ public class PropertyServiceTest {
         }
     }
 
+    @Test
+    public void testUpdateById(){
+        PropertyDtoResponse savedPropertyDtoResponse = propertyService.save(PropertyCreator.getPropertyReceive());
 
+        PropertyDtoReceive propertyDtoReceive = PropertyCreator.getPropertyReceive();
+        propertyDtoReceive.setName("Updated name");
+        propertyDtoReceive.setContact("Updated contact");
+        propertyDtoReceive.setNumberOfUnits(1);
+        propertyDtoReceive.setDescription("Updated description");
+        propertyDtoReceive.getAddress().setCep("Updated cep");
+        propertyDtoReceive.getAddress().setNumber("Updated number");
+        propertyDtoReceive.getAddress().setStreet("Updated street");
+        propertyDtoReceive.getAddress().setCity("Updated city");
+        propertyDtoReceive.getAddress().setState("Updated state");
+
+        PropertyDtoResponse updatedPropertyDtoResponse = propertyService.updateById(savedPropertyDtoResponse.getId(), propertyDtoReceive);
+
+        assertEquals(updatedPropertyDtoResponse.getName(), propertyDtoReceive.getName());
+        assertEquals(updatedPropertyDtoResponse.getContact(), propertyDtoReceive.getContact());
+        assertEquals(updatedPropertyDtoResponse.getNumberOfUnits(), propertyDtoReceive.getNumberOfUnits());
+        assertEquals(updatedPropertyDtoResponse.getDescription(), propertyDtoReceive.getDescription());
+        assertEquals(updatedPropertyDtoResponse.getAddress().getCep(), propertyDtoReceive.getAddress().getCep());
+        assertEquals(updatedPropertyDtoResponse.getAddress().getNumber(), propertyDtoReceive.getAddress().getNumber());
+        assertEquals(updatedPropertyDtoResponse.getAddress().getStreet(), propertyDtoReceive.getAddress().getStreet());
+        assertEquals(updatedPropertyDtoResponse.getAddress().getCity(), propertyDtoReceive.getAddress().getCity());
+        assertEquals(updatedPropertyDtoResponse.getAddress().getState(), propertyDtoReceive.getAddress().getState());
+    }
 }
