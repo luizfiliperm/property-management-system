@@ -2,8 +2,10 @@ package com.luizfiliperm.pms.controllers;
 
 import com.luizfiliperm.pms.dtos.property.PropertyDtoReceive;
 import com.luizfiliperm.pms.dtos.property.PropertyDtoResponse;
+import com.luizfiliperm.pms.error.ErrorCreator;
 import com.luizfiliperm.pms.exceptions.ErrorMessage;
 import com.luizfiliperm.pms.exceptions.PmsException;
+import com.luizfiliperm.pms.exceptions.ValidationErrorMessage;
 import com.luizfiliperm.pms.json.JsonConverter;
 import com.luizfiliperm.pms.property.PropertyCreator;
 import com.luizfiliperm.pms.services.PropertyService;
@@ -14,10 +16,10 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
+import org.springframework.web.bind.MethodArgumentNotValidException;
 
 
-import static org.hamcrest.Matchers.is;
-import static org.hamcrest.Matchers.notNullValue;
+import static org.hamcrest.Matchers.*;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
@@ -95,4 +97,20 @@ public class PropertyControllerTest {
                 );
     }
 
+
+    @Test
+    public void testNullInput() throws Exception {
+        PropertyDtoReceive invalidDtoReceive = PropertyCreator.getInvalidDtoReceive();
+
+        mockMvc.perform(post("/pms/properties")
+                .contentType(MediaType.APPLICATION_JSON)
+                .content(JsonConverter.convertToJson(invalidDtoReceive)))
+                .andExpect(status().isBadRequest())
+                .andExpect(jsonPath("$.message", is("Validation Error")))
+                .andExpect(jsonPath("$.status", is(400)))
+                .andExpect(jsonPath("$.errors", containsInAnyOrder("The street is required", "The description is required", "The name is required")))
+                .andExpect(jsonPath("$.path", is("/pms/properties"))
+                );
+
+    }
 }

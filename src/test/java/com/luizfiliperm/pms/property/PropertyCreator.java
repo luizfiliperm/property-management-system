@@ -31,5 +31,13 @@ public class PropertyCreator {
         return propertyDtoResponse;
     }
 
+    public static PropertyDtoReceive getInvalidDtoReceive(){
+        PropertyDtoReceive propertyDtoReceive = getPropertyReceive();
+        propertyDtoReceive.setName(null);
+        propertyDtoReceive.setDescription(null);
+        propertyDtoReceive.getAddress().setStreet(null);
+
+        return propertyDtoReceive;
+    }
 
 }
