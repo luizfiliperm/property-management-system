@@ -5,6 +5,7 @@ import org.springframework.context.support.DefaultMessageSourceResolvable;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.http.converter.HttpMessageNotReadableException;
 import org.springframework.web.bind.MethodArgumentNotValidException;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -24,7 +25,7 @@ public class GlobalExceptionHandler {
         return getResponseEntity(ex.getHttpStatus(), ex.getMessage());
     }
 
-    @ExceptionHandler({MethodArgumentTypeMismatchException.class, PropertyReferenceException.class})
+    @ExceptionHandler({MethodArgumentTypeMismatchException.class, PropertyReferenceException.class, HttpMessageNotReadableException.class})
     ResponseEntity<ErrorMessage> handleBadRequestExceptions(Exception ex){
         return getResponseEntity(HttpStatus.BAD_REQUEST, ex.getMessage());
 
