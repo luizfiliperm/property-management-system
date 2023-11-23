@@ -2,6 +2,7 @@ package com.luizfiliperm.pms.dtos.property;
 
 import com.luizfiliperm.pms.dtos.AddressDto;
 import com.luizfiliperm.pms.entities.Property;
+import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -11,12 +12,15 @@ import lombok.NoArgsConstructor;
 @Data
 public class PropertyDtoReceive {
 
+    @NotBlank(message = "The name is required")
     private String name;
 
+    @NotBlank(message = "The contact is required")
     private String contact;
 
     private Integer numberOfUnits;
 
+    @NotBlank(message = "The description is required")
     private String description;
 
     private AddressDto address;

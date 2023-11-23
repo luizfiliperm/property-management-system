@@ -6,6 +6,7 @@ import com.luizfiliperm.pms.dtos.property.PropertyDtoResponse;
 import com.luizfiliperm.pms.exceptions.PmsException;
 import com.luizfiliperm.pms.services.PropertyService;
 import com.luizfiliperm.pms.util.AppConstants;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
@@ -20,7 +21,7 @@ public class PropertyController {
     PropertyService propertyService;
 
     @PostMapping
-    public ResponseEntity<PropertyDtoResponse> saveProperty(@RequestBody PropertyDtoReceive propertyDtoReceive) {
+    public ResponseEntity<PropertyDtoResponse> saveProperty(@Valid @RequestBody PropertyDtoReceive propertyDtoReceive) {
         return ResponseEntity.status(HttpStatus.CREATED).body(propertyService.save(propertyDtoReceive));
     }
 
@@ -45,7 +46,7 @@ public class PropertyController {
     }
 
     @PutMapping("/{propertyId}")
-    public ResponseEntity<PropertyDtoResponse> updatePropertyById(@PathVariable Long propertyId, @RequestBody PropertyDtoReceive propertyDtoReceive){
+    public ResponseEntity<PropertyDtoResponse> updatePropertyById(@PathVariable Long propertyId, @Valid @RequestBody PropertyDtoReceive propertyDtoReceive){
         return ResponseEntity.status(HttpStatus.OK).body(propertyService.updateById(propertyId, propertyDtoReceive));
     }
 }
