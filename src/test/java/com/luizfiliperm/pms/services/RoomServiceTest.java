@@ -2,6 +2,7 @@ package com.luizfiliperm.pms.services;
 
 import com.luizfiliperm.pms.dtos.room.RoomDtoReceive;
 import com.luizfiliperm.pms.dtos.room.RoomDtoResponse;
+import com.luizfiliperm.pms.entities.room.enums.RoomType;
 import com.luizfiliperm.pms.entityCreator.PropertyCreator;
 import com.luizfiliperm.pms.entityCreator.RoomCreator;
 import com.luizfiliperm.pms.exceptions.PmsException;
@@ -48,7 +49,7 @@ public class RoomServiceTest {
         RoomDtoResponse savedRoom = roomService.findByIdAndPropertyId(roomId, propertyId);
 
         assertNotNull(savedRoom);
-        assertEquals(1L, savedRoom.getId());
+        assertEquals(roomId, savedRoom.getId());
         assertEquals(room.getDescription(), savedRoom.getDescription());
         assertEquals(room.getStatus(), savedRoom.getStatus());
         assertEquals(room.getType(), savedRoom.getType());
@@ -68,5 +69,30 @@ public class RoomServiceTest {
         }catch (PmsException e){
             assertEquals("Room not found with id: " + roomId, e.getMessage());
         }
+    }
+
+    @Test
+    public void testUpdate(){
+        Long propertyId = propertyService.save(PropertyCreator.getPropertyReceive()).getId();
+        Long roomId = roomService.save(RoomCreator.getRoomReceive(), propertyId).getId();
+        RoomDtoReceive roomDtoReceive = RoomCreator.getRoomReceive();
+
+        roomDtoReceive.setType(RoomType.DOUBLE);
+        RoomDtoReceive updatedRoom = roomService.updateById(roomId, propertyId, roomDtoReceive);
+
+        assertNotNull(updatedRoom);
+        assertEquals(roomDtoReceive.getDescription(), updatedRoom.getDescription());
+        assertEquals(roomDtoReceive.getStatus(), updatedRoom.getStatus());
+        assertEquals(roomDtoReceive.getType(), updatedRoom.getType());
+        assertEquals(roomDtoReceive.getNumber(), updatedRoom.getNumber());
+        assertEquals(roomDtoReceive.getFloor(), updatedRoom.getFloor());
+    }
+
+    @Test
+    public void testFindAll(){
+        Long propertyId = propertyService.save(PropertyCreator.getPropertyReceive()).getId();
+        RoomDtoResponse response = roomService.save(RoomCreator.getRoomReceive(), propertyId);
+
+        assertEquals(roomService.findAll(0, 1, "number", "asc", propertyId).getContent().get(0), response);
     }
 }
