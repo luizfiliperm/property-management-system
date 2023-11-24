@@ -1,6 +1,7 @@
 package com.luizfiliperm.pms.entities.user;
 
 import com.luizfiliperm.pms.entities.Info.PersonalInformation;
+import com.luizfiliperm.pms.entities.user.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -27,6 +28,10 @@ public class User {
 
     @Column(name = "password")
     private String password;
+
+    @Column(name = "role")
+    @Enumerated(EnumType.STRING)
+    private UserRole role;
 
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "personal_information_id")
