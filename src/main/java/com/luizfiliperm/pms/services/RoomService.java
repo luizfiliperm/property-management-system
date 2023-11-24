@@ -12,8 +12,8 @@ public interface RoomService {
 
     PageResponse<RoomDtoResponse> findAll(int page, int size, String sortBy, String sortDir, Long propertyId);
 
-    void delete(Long id);
+    void delete(Long id, Long propertyId);
 
-    RoomDtoReceive updateById(Long id, RoomDtoReceive roomDtoReceive);
+    RoomDtoReceive updateById(Long id,Long propertyId, RoomDtoReceive roomDtoReceive);
 
 }
