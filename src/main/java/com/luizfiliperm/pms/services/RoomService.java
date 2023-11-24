@@ -6,7 +6,7 @@ import com.luizfiliperm.pms.dtos.room.RoomDtoResponse;
 
 public interface RoomService {
 
-    RoomDtoResponse save(RoomDtoReceive roomDtoReceive);
+    RoomDtoResponse save(RoomDtoReceive roomDtoReceive, Long propertyId);
 
     RoomDtoResponse findById(Long id);
 

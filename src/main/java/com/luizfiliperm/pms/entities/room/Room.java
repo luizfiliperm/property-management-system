@@ -4,8 +4,14 @@ import com.luizfiliperm.pms.entities.property.Property;
 import com.luizfiliperm.pms.entities.room.enums.RoomStatus;
 import com.luizfiliperm.pms.entities.room.enums.RoomType;
 import jakarta.persistence.*;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 
 @Entity
+@AllArgsConstructor
+@NoArgsConstructor
+@Data
 public class Room {
 
     @Id

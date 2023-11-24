@@ -6,7 +6,7 @@ import com.luizfiliperm.pms.dtos.property.PropertyDtoResponse;
 import com.luizfiliperm.pms.exceptions.ErrorMessage;
 import com.luizfiliperm.pms.exceptions.PmsException;
 import com.luizfiliperm.pms.json.JsonConverter;
-import com.luizfiliperm.pms.property.PropertyCreator;
+import com.luizfiliperm.pms.entityCreator.PropertyCreator;
 import com.luizfiliperm.pms.services.PropertyService;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,4 +1,4 @@
-package com.luizfiliperm.pms.property;
+package com.luizfiliperm.pms.entityCreator;
 
 import com.luizfiliperm.pms.dtos.AddressDto;
 import com.luizfiliperm.pms.dtos.PageResponse;

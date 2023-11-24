@@ -3,7 +3,7 @@ package com.luizfiliperm.pms.services;
 import com.luizfiliperm.pms.dtos.property.PropertyDtoResponse;
 import com.luizfiliperm.pms.dtos.property.PropertyDtoReceive;
 import com.luizfiliperm.pms.exceptions.PmsException;
-import com.luizfiliperm.pms.property.PropertyCreator;
+import com.luizfiliperm.pms.entityCreator.PropertyCreator;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
