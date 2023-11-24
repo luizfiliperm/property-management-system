@@ -3,10 +3,8 @@ package com.luizfiliperm.pms.controllers;
 import com.luizfiliperm.pms.dtos.PageResponse;
 import com.luizfiliperm.pms.dtos.property.PropertyDtoReceive;
 import com.luizfiliperm.pms.dtos.property.PropertyDtoResponse;
-import com.luizfiliperm.pms.error.ErrorCreator;
 import com.luizfiliperm.pms.exceptions.ErrorMessage;
 import com.luizfiliperm.pms.exceptions.PmsException;
-import com.luizfiliperm.pms.exceptions.ValidationErrorMessage;
 import com.luizfiliperm.pms.json.JsonConverter;
 import com.luizfiliperm.pms.property.PropertyCreator;
 import com.luizfiliperm.pms.services.PropertyService;
@@ -17,7 +15,6 @@ import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.MockMvc;
-import org.springframework.web.bind.MethodArgumentNotValidException;
 
 
 import static org.hamcrest.Matchers.*;
@@ -96,6 +93,12 @@ public class PropertyControllerTest {
                 .andExpect(jsonPath("$.status", is(mockError.getStatus())))
                 .andExpect(jsonPath("$.path", is(mockError.getPath()))
                 );
+    }
+
+    @Test
+    public void testDeleteProperty() throws Exception{
+        mockMvc.perform(delete("/pms/properties/1"))
+                .andExpect(status().isOk());
     }
 
     @Test

@@ -1,7 +1,5 @@
 package com.luizfiliperm.pms.error;
 
-import com.luizfiliperm.pms.exceptions.ValidationErrorMessage;
-
 import java.util.List;
 
 public class ErrorCreator {
