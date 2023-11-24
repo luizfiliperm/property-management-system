@@ -19,7 +19,7 @@ public class Room {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "number", unique = true)
+    @Column(name = "number")
     private Integer number;
 
     @Column(name = "description")
@@ -37,7 +37,7 @@ public class Room {
     private Integer floor;
 
     @ManyToOne
-    @JoinColumn(name = "property_id")
+    @JoinColumn(name = "property_id", nullable = false)
     private Property property;
 
 }

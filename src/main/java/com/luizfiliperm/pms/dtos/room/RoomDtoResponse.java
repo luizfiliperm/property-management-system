@@ -23,16 +23,13 @@ public class RoomDtoResponse {
 
     private Integer floor;
 
-    private Long propertyId;
-
-    public RoomDtoResponse(Room room, Long propertyId){
+    public RoomDtoResponse(Room room){
         this.id = room.getId();
         this.number = room.getNumber();
         this.description = room.getDescription();
         this.status = room.getStatus();
         this.type = room.getType();
         this.floor = room.getFloor();
-        this.propertyId = propertyId;
     }
 
     public Room convertToRoom(){

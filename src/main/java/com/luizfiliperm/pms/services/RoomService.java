@@ -8,7 +8,7 @@ public interface RoomService {
 
     RoomDtoResponse save(RoomDtoReceive roomDtoReceive, Long propertyId);
 
-    RoomDtoResponse findById(Long id);
+    RoomDtoResponse findByIdAndPropertyId(Long id, Long propertyId);
 
     PageResponse<RoomDtoResponse> findAll(int page, int size, String sortBy, String sortDir, Long propertyId);
 

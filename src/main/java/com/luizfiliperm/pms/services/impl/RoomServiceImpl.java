@@ -4,6 +4,7 @@ import com.luizfiliperm.pms.dtos.PageResponse;
 import com.luizfiliperm.pms.dtos.room.RoomDtoReceive;
 import com.luizfiliperm.pms.dtos.room.RoomDtoResponse;
 import com.luizfiliperm.pms.entities.property.Property;
+import com.luizfiliperm.pms.entities.room.Room;
 import com.luizfiliperm.pms.exceptions.PmsException;
 import com.luizfiliperm.pms.repositories.PropertyRepository;
 import com.luizfiliperm.pms.repositories.RoomRepository;
@@ -23,12 +24,14 @@ public class RoomServiceImpl implements RoomService {
     @Override
     public RoomDtoResponse save(RoomDtoReceive roomDtoReceive, Long propertyId) {
         Property property = propertyRepository.findById(propertyId).orElseThrow(() -> new PmsException("Property not found with id: " + propertyId, HttpStatus.NOT_FOUND));
-        return new RoomDtoResponse(roomRepository.save(roomDtoReceive.convertToRoom()), propertyId);
+        Room room = roomDtoReceive.convertToRoom();
+        room.setProperty(property);
+        return new RoomDtoResponse(roomRepository.save(room));
     }
 
     @Override
-    public RoomDtoResponse findById(Long id) {
-        return null;
+    public RoomDtoResponse findByIdAndPropertyId(Long id, Long propertyId) {
+        return new RoomDtoResponse(roomRepository.findByIdAndPropertyId(id, propertyId).orElseThrow(() -> new PmsException("Room not found with id: " + id, HttpStatus.NOT_FOUND)));
     }
 
     @Override

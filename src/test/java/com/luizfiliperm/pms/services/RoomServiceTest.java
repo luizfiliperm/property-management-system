@@ -34,7 +34,24 @@ public class RoomServiceTest {
         assertEquals(roomDtoReceive.getStatus(), savedRoom.getStatus());
         assertEquals(roomDtoReceive.getType(), savedRoom.getType());
         assertEquals(roomDtoReceive.getNumber(), savedRoom.getNumber());
-        assertEquals(propertyId, savedRoom.getPropertyId());
+        assertEquals(roomDtoReceive.getFloor(), savedRoom.getFloor());
 
+    }
+
+    @Test
+    public void testFindByIdAndPropertyId(){
+        Long propertyId = propertyService.save(PropertyCreator.getPropertyReceive()).getId();
+        RoomDtoReceive room = RoomCreator.getRoomReceive();
+        Long roomId = roomService.save(RoomCreator.getRoomReceive(), propertyId).getId();
+
+        RoomDtoResponse savedRoom = roomService.findByIdAndPropertyId(roomId, propertyId);
+
+        assertNotNull(savedRoom);
+        assertEquals(1L, savedRoom.getId());
+        assertEquals(room.getDescription(), savedRoom.getDescription());
+        assertEquals(room.getStatus(), savedRoom.getStatus());
+        assertEquals(room.getType(), savedRoom.getType());
+        assertEquals(room.getNumber(), savedRoom.getNumber());
+        assertEquals(room.getFloor(), savedRoom.getFloor());
     }
 }
