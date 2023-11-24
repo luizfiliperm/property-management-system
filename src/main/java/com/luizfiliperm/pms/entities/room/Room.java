@@ -13,7 +13,7 @@ public class Room {
     @Column(name = "id")
     private Long id;
 
-    @Column(name = "number")
+    @Column(name = "number", unique = true)
     private Integer number;
 
     @Column(name = "description")
