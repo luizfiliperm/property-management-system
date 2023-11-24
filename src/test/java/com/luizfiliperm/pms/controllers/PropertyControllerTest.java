@@ -164,4 +164,23 @@ public class PropertyControllerTest {
                 .andExpect(jsonPath("$.last", is(true))
                 );
     }
+
+    @Test
+    public void testFindAllWithInvalidPageNo() throws Exception{
+        mockMvc.perform(get("/pms/properties?pageNo=notANumber&pageSize=1&sortBy=name&sortDir=asc"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message", is("Failed to convert value of type 'java.lang.String' to required type 'int'; For input string: \"notANumber\"")))
+                .andExpect(jsonPath("$.status", is(HttpStatus.BAD_REQUEST.value())));
+    }
+
+    @Test
+    public void testFindAllWithInvalidPageSize() throws Exception{
+        mockMvc.perform(get("/pms/properties?pageNo=0&pageSize=notANumber&sortBy=name&sortDir=asc"))
+                .andExpect(status().isBadRequest())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.message", is("Failed to convert value of type 'java.lang.String' to required type 'int'; For input string: \"notANumber\"")))
+                .andExpect(jsonPath("$.status", is(HttpStatus.BAD_REQUEST.value())));
+    }
+
 }
