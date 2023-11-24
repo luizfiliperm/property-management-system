@@ -1,5 +1,6 @@
 package com.luizfiliperm.pms.controllers;
 
+import com.luizfiliperm.pms.dtos.PageResponse;
 import com.luizfiliperm.pms.dtos.property.PropertyDtoReceive;
 import com.luizfiliperm.pms.dtos.property.PropertyDtoResponse;
 import com.luizfiliperm.pms.error.ErrorCreator;
@@ -121,7 +122,7 @@ public class PropertyControllerTest {
     }
 
     @Test
-    public void testNullInput() throws Exception {
+    public void testNullInputsAtPost() throws Exception {
         PropertyDtoReceive invalidDtoReceive = PropertyCreator.getInvalidDtoReceive();
 
         mockMvc.perform(post("/pms/properties")
@@ -134,5 +135,33 @@ public class PropertyControllerTest {
                 .andExpect(jsonPath("$.path", is("/pms/properties"))
                 );
 
+    }
+
+    @Test
+    public void testFindAllWithValidParameters() throws Exception{
+
+        PageResponse<PropertyDtoResponse> mockResponse = PropertyCreator.getPageResponse();
+
+        when(propertyService.findAll(0, 1, "id", "asc")).thenReturn(mockResponse);
+
+        mockMvc.perform(get("/pms/properties?pageNo=0&pageSize=1&sortBy=id&sortDir=asc"))
+                .andExpect(status().isOk())
+                .andExpect(content().contentType(MediaType.APPLICATION_JSON))
+                .andExpect(jsonPath("$.content[0].id", is(1)))
+                .andExpect(jsonPath("$.content[0].name", is("Test Hotel")))
+                .andExpect(jsonPath("$.content[0].contact", is("+5588999999999")))
+                .andExpect(jsonPath("$.content[0].numberOfUnits", is(0)))
+                .andExpect(jsonPath("$.content[0].description", is("No description")))
+                .andExpect(jsonPath("$.content[0].address.cep", is("30203200")))
+                .andExpect(jsonPath("$.content[0].address.number", is("42")))
+                .andExpect(jsonPath("$.content[0].address.street", is("Nobody street")))
+                .andExpect(jsonPath("$.content[0].address.city", is("City of tests")))
+                .andExpect(jsonPath("$.content[0].address.state", is("PB")))
+                .andExpect(jsonPath("$.pageNo", is(0)))
+                .andExpect(jsonPath("$.pageSize", is(1)))
+                .andExpect(jsonPath("$.totalElements", is(1)))
+                .andExpect(jsonPath("$.totalPages", is(1)))
+                .andExpect(jsonPath("$.last", is(true))
+                );
     }
 }

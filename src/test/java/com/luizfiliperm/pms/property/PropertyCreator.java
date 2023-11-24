@@ -1,8 +1,11 @@
 package com.luizfiliperm.pms.property;
 
 import com.luizfiliperm.pms.dtos.AddressDto;
+import com.luizfiliperm.pms.dtos.PageResponse;
 import com.luizfiliperm.pms.dtos.property.PropertyDtoReceive;
 import com.luizfiliperm.pms.dtos.property.PropertyDtoResponse;
+
+import java.util.List;
 
 public class PropertyCreator {
     public static PropertyDtoReceive getPropertyReceive() {
@@ -38,6 +41,10 @@ public class PropertyCreator {
         propertyDtoReceive.getAddress().setStreet(null);
 
         return propertyDtoReceive;
+    }
+
+    public static PageResponse<PropertyDtoResponse> getPageResponse(){
+        return new PageResponse<>(List.of(getPropertyDtoResponse()), 0, 1, 1L, 1, true);
     }
 
 }
