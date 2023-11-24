@@ -1,6 +1,6 @@
 package com.luizfiliperm.pms.entities.property;
 
-import com.luizfiliperm.pms.entities.Address;
+import com.luizfiliperm.pms.entities.Info.Address;
 import com.luizfiliperm.pms.entities.room.Room;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;

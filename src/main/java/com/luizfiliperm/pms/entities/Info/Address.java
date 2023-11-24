@@ -1,4 +1,4 @@
-package com.luizfiliperm.pms.entities;
+package com.luizfiliperm.pms.entities.Info;
 
 
 import com.luizfiliperm.pms.entities.property.Property;
@@ -35,4 +35,7 @@ public class Address {
 
     @OneToOne(mappedBy = "address", cascade = CascadeType.ALL, orphanRemoval = true)
     private Property property;
+
+    @OneToOne(mappedBy = "address", cascade = CascadeType.ALL, orphanRemoval = true)
+    private PersonalInformation personalInformation;
 }

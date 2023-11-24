@@ -1,6 +1,6 @@
 package com.luizfiliperm.pms.dtos;
 
-import com.luizfiliperm.pms.entities.Address;
+import com.luizfiliperm.pms.entities.Info.Address;
 import jakarta.validation.constraints.NotBlank;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -35,6 +35,13 @@ public class AddressDto {
     }
 
     public Address convertToAddress(){
-        return new Address(null, this.cep, this.number, this.street, this.city, this.state, null);
+        Address address = new Address();
+        address.setCep(this.cep);
+        address.setNumber(this.number);
+        address.setStreet(this.street);
+        address.setCity(this.city);
+        address.setState(this.state);
+
+        return address;
     }
 }
