@@ -1,6 +1,7 @@
 package com.luizfiliperm.pms.entities;
 
 
+import com.luizfiliperm.pms.entities.property.Property;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;

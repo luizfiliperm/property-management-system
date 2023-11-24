@@ -1,7 +1,7 @@
 package com.luizfiliperm.pms.dtos.property;
 
 import com.luizfiliperm.pms.dtos.AddressDto;
-import com.luizfiliperm.pms.entities.Property;
+import com.luizfiliperm.pms.entities.property.Property;
 import jakarta.validation.Valid;
 import jakarta.validation.constraints.NotBlank;
 import jakarta.validation.constraints.NotNull;
@@ -38,6 +38,12 @@ public class PropertyDtoReceive {
     }
 
     public Property convertToProperty(){
-        return new Property(null, this.name, this.contact, this.numberOfUnits, this.description, this.address.convertToAddress());
+        Property property = new Property();
+        property.setName(this.name);
+        property.setContact(this.contact);
+        property.setNumberOfUnits(this.numberOfUnits);
+        property.setDescription(this.description);
+        property.setAddress(this.address.convertToAddress());
+        return property;
     }
 }

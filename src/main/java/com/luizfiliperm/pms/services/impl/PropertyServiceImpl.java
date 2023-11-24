@@ -3,7 +3,7 @@ package com.luizfiliperm.pms.services.impl;
 import com.luizfiliperm.pms.dtos.PageResponse;
 import com.luizfiliperm.pms.dtos.property.PropertyDtoReceive;
 import com.luizfiliperm.pms.dtos.property.PropertyDtoResponse;
-import com.luizfiliperm.pms.entities.Property;
+import com.luizfiliperm.pms.entities.property.Property;
 import com.luizfiliperm.pms.exceptions.PmsException;
 import com.luizfiliperm.pms.repositories.AddressRepository;
 import com.luizfiliperm.pms.repositories.PropertyRepository;

@@ -1,7 +1,7 @@
 package com.luizfiliperm.pms.dtos.property;
 
 import com.luizfiliperm.pms.dtos.AddressDto;
-import com.luizfiliperm.pms.entities.Property;
+import com.luizfiliperm.pms.entities.property.Property;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -32,6 +32,13 @@ public class PropertyDtoResponse {
     }
 
     public Property convertToProperty(){
-        return new Property(this.id, this.name, this.contact, this.numberOfUnits, this.description, this.address.convertToAddress());
+        Property property = new Property();
+        property.setId(this.id);
+        property.setName(this.name);
+        property.setContact(this.contact);
+        property.setNumberOfUnits(this.numberOfUnits);
+        property.setDescription(this.description);
+        property.setAddress(this.address.convertToAddress());
+        return property;
     }
 }
