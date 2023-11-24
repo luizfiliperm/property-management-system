@@ -4,6 +4,7 @@ import com.luizfiliperm.pms.dtos.room.RoomDtoReceive;
 import com.luizfiliperm.pms.dtos.room.RoomDtoResponse;
 import com.luizfiliperm.pms.entityCreator.PropertyCreator;
 import com.luizfiliperm.pms.entityCreator.RoomCreator;
+import com.luizfiliperm.pms.exceptions.PmsException;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -53,5 +54,19 @@ public class RoomServiceTest {
         assertEquals(room.getType(), savedRoom.getType());
         assertEquals(room.getNumber(), savedRoom.getNumber());
         assertEquals(room.getFloor(), savedRoom.getFloor());
+    }
+
+    @Test
+    public void testDelete(){
+        Long propertyId = propertyService.save(PropertyCreator.getPropertyReceive()).getId();
+        Long roomId = roomService.save(RoomCreator.getRoomReceive(), propertyId).getId();
+
+        roomService.delete(roomId, propertyId);
+
+        try{
+            roomService.findByIdAndPropertyId(roomId, propertyId);
+        }catch (PmsException e){
+            assertEquals("Room not found with id: " + roomId, e.getMessage());
+        }
     }
 }
