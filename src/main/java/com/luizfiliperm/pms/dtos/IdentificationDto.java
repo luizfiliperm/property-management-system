@@ -14,7 +14,7 @@ import lombok.NoArgsConstructor;
 public class IdentificationDto {
 
     @NotBlank(message = "The identification type is required")
-    @Pattern(regexp = "^(CPF|CNPJ|Passport|RG)$", message = "Invalid identification type")
+    @Pattern(regexp = "^(CPF|CNPJ|PASSPORT|RG)$", message = "Invalid identification type, the available types are: CPF, CNPJ, PASSPORT, RG")
     private String identificationType;
 
     @NotBlank(message = "The document id is required")
