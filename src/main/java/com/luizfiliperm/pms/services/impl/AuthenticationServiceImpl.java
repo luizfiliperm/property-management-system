@@ -33,6 +33,9 @@ public class AuthenticationServiceImpl implements AuthenticationService {
 
     @Override
     public UserAuthenticationDto register(UserRegisterDto userRegisterDto) {
+        if (userRepository.existsByEmail(userRegisterDto.getEmail())) {
+            throw new PmsException("Email already registered", HttpStatus.BAD_REQUEST);
+        }
         User user = userRegisterDto.convertToUser();
         user.setPassword(passwordEncoder.encode(user.getPassword()));
         user.setRole(UserRole.ROLE_USER);

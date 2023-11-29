@@ -29,6 +29,7 @@ public class PersonalInformationDto {
         PersonalInformation personalInformation = new PersonalInformation();
         personalInformation.setPhoneNumber(this.phoneNumber);
         personalInformation.setBirthDate(this.birthDate);
+        personalInformation.setNationality(this.nationality);
         personalInformation.setAddress(this.address.convertToAddress());
         personalInformation.setIdentification(this.identification.convertToIdentification());
         return  personalInformation;
