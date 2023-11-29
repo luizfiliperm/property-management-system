@@ -4,6 +4,7 @@ import com.luizfiliperm.pms.dtos.user.UserAuthenticationDto;
 import com.luizfiliperm.pms.dtos.user.UserLoginDto;
 import com.luizfiliperm.pms.dtos.user.UserRegisterDto;
 import com.luizfiliperm.pms.services.AuthenticationService;
+import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -20,7 +21,7 @@ public class AuthenticationController {
     private AuthenticationService authenticationService;
 
     @PostMapping("/register")
-    public ResponseEntity<UserAuthenticationDto> register(@RequestBody UserRegisterDto userRegisterDto){
+    public ResponseEntity<UserAuthenticationDto> register(@Valid @RequestBody UserRegisterDto userRegisterDto){
         return ResponseEntity.status(HttpStatus.CREATED.value()).body(authenticationService.register(userRegisterDto));
     }
 
