@@ -2,6 +2,7 @@ package com.luizfiliperm.pms.entities.property;
 
 import com.luizfiliperm.pms.entities.Info.Address;
 import com.luizfiliperm.pms.entities.room.Room;
+import com.luizfiliperm.pms.entities.user.User;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
 import lombok.Data;
@@ -38,4 +39,7 @@ public class Property {
 
     @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Room> rooms;
+
+    @OneToMany(mappedBy = "property", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<User> user;
 }

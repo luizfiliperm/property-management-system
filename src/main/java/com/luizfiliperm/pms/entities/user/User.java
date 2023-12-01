@@ -1,6 +1,7 @@
 package com.luizfiliperm.pms.entities.user;
 
 import com.luizfiliperm.pms.entities.Info.PersonalInformation;
+import com.luizfiliperm.pms.entities.property.Property;
 import com.luizfiliperm.pms.entities.user.enums.UserRole;
 import jakarta.persistence.*;
 import lombok.AllArgsConstructor;
@@ -42,6 +43,10 @@ public class User implements UserDetails {
     @OneToOne(cascade = CascadeType.ALL, orphanRemoval = true)
     @JoinColumn(name = "personal_information_id")
     private PersonalInformation personalInformation;
+
+    @ManyToOne
+    @JoinColumn(name = "property_id")
+    private Property property;
 
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
