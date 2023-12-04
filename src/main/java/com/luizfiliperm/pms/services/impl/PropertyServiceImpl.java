@@ -4,9 +4,11 @@ import com.luizfiliperm.pms.dtos.PageResponse;
 import com.luizfiliperm.pms.dtos.property.PropertyDtoReceive;
 import com.luizfiliperm.pms.dtos.property.PropertyDtoResponse;
 import com.luizfiliperm.pms.entities.property.Property;
+import com.luizfiliperm.pms.entities.user.User;
 import com.luizfiliperm.pms.exceptions.PmsException;
 import com.luizfiliperm.pms.repositories.AddressRepository;
 import com.luizfiliperm.pms.repositories.PropertyRepository;
+import com.luizfiliperm.pms.repositories.UserRepository;
 import com.luizfiliperm.pms.services.PropertyService;
 import jakarta.transaction.Transactional;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,11 +30,19 @@ public class PropertyServiceImpl implements PropertyService {
     @Autowired
     AddressRepository addressRepository;
 
-    @Override
-    public PropertyDtoResponse save(PropertyDtoReceive propertyDtoReceive) {
-        Property property = propertyDtoReceive.convertToProperty();
-        return new PropertyDtoResponse(propertyRepository.save(property));
+    @Autowired
+    UserRepository userRepository;
 
+    @Override
+    public PropertyDtoResponse save(PropertyDtoReceive propertyDtoReceive, User user) {
+        if(user.getProperty() != null){
+            throw new PmsException("User already has a property", HttpStatus.BAD_REQUEST);
+        }
+        Property property = propertyRepository.save(propertyDtoReceive.convertToProperty());
+
+        user.setProperty(property);
+        userRepository.save(user);
+        return new PropertyDtoResponse(property);
     }
 
     @Override
@@ -64,9 +74,8 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
-    public PropertyDtoResponse updateById(Long id, PropertyDtoReceive propertyDtoReceive) {
+    public PropertyDtoResponse update(Property property, PropertyDtoReceive propertyDtoReceive) {
 
-        Property property = propertyRepository.findById(id).orElseThrow(() -> new PmsException("Property not found with id: " + id, HttpStatus.NOT_FOUND));
         property.setName(propertyDtoReceive.getName());
         property.setContact(propertyDtoReceive.getContact());
         property.setNumberOfUnits(propertyDtoReceive.getNumberOfUnits());

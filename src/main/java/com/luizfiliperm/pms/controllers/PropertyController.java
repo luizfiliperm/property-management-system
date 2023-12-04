@@ -3,14 +3,18 @@ package com.luizfiliperm.pms.controllers;
 import com.luizfiliperm.pms.dtos.PageResponse;
 import com.luizfiliperm.pms.dtos.property.PropertyDtoReceive;
 import com.luizfiliperm.pms.dtos.property.PropertyDtoResponse;
+import com.luizfiliperm.pms.entities.user.User;
 import com.luizfiliperm.pms.exceptions.PmsException;
 import com.luizfiliperm.pms.services.PropertyService;
 import com.luizfiliperm.pms.util.AppConstants;
+import com.luizfiliperm.pms.util.AuthUtil;
 import jakarta.validation.Valid;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mapping.PropertyReferenceException;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.web.bind.annotation.*;
 
 @RestController
@@ -21,23 +25,24 @@ public class PropertyController {
     PropertyService propertyService;
 
     @PostMapping
-    public ResponseEntity<PropertyDtoResponse> saveProperty(@Valid @RequestBody PropertyDtoReceive propertyDtoReceive) {
-        return ResponseEntity.status(HttpStatus.CREATED).body(propertyService.save(propertyDtoReceive));
+    public ResponseEntity<PropertyDtoResponse> saveProperty(@Valid @RequestBody PropertyDtoReceive propertyDtoReceive, Authentication authentication) {
+
+        return ResponseEntity.status(HttpStatus.CREATED).body(propertyService.save(propertyDtoReceive, AuthUtil.retrieveUserFromAuthentication(authentication)));
     }
 
-    @GetMapping("/{propertyId}")
-    public ResponseEntity<PropertyDtoResponse> findPropertyById(@PathVariable Long propertyId) {
-        return ResponseEntity.ok(propertyService.findById(propertyId));
+    @GetMapping
+    public ResponseEntity<PropertyDtoResponse> getProperty(Authentication authentication) {
+        return ResponseEntity.ok(propertyService.findById(AuthUtil.retrievePropertyFromAuthentication(authentication).getId()));
     }
 
-    @DeleteMapping("/{propertyId}")
-    public ResponseEntity<Void> deletePropertyById(@PathVariable Long propertyId){
-        propertyService.delete(propertyId);
+    @DeleteMapping
+    public ResponseEntity<Void> deleteProperty(Authentication authentication){
+        propertyService.delete(AuthUtil.retrievePropertyFromAuthentication(authentication).getId());
         return ResponseEntity.status(HttpStatus.OK).build();
     }
 
-    @PutMapping("/{propertyId}")
-    public ResponseEntity<PropertyDtoResponse> updatePropertyById(@PathVariable Long propertyId, @Valid @RequestBody PropertyDtoReceive propertyDtoReceive){
-        return ResponseEntity.status(HttpStatus.OK).body(propertyService.updateById(propertyId, propertyDtoReceive));
+    @PutMapping
+    public ResponseEntity<PropertyDtoResponse> updateProperty(@PathVariable Long propertyId, @Valid @RequestBody PropertyDtoReceive propertyDtoReceive, Authentication authentication){
+        return ResponseEntity.status(HttpStatus.OK).body(propertyService.update(AuthUtil.retrievePropertyFromAuthentication(authentication), propertyDtoReceive));
     }
 }
