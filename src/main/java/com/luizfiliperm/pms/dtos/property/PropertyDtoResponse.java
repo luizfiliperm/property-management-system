@@ -16,8 +16,6 @@ public class PropertyDtoResponse {
 
     private String contact;
 
-    private Integer numberOfUnits;
-
     private String description;
 
     private AddressDto address;
@@ -26,7 +24,6 @@ public class PropertyDtoResponse {
         this.id = property.getId();
         this.name = property.getName();
         this.contact = property.getContact();
-        this.numberOfUnits = property.getNumberOfUnits();
         this.description = property.getDescription();
         this.address = new AddressDto(property.getAddress());
     }
@@ -36,7 +33,6 @@ public class PropertyDtoResponse {
         property.setId(this.id);
         property.setName(this.name);
         property.setContact(this.contact);
-        property.setNumberOfUnits(this.numberOfUnits);
         property.setDescription(this.description);
         property.setAddress(this.address.convertToAddress());
         return property;

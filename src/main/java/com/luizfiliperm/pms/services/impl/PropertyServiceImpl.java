@@ -78,7 +78,6 @@ public class PropertyServiceImpl implements PropertyService {
 
         property.setName(propertyDtoReceive.getName());
         property.setContact(propertyDtoReceive.getContact());
-        property.setNumberOfUnits(propertyDtoReceive.getNumberOfUnits());
         property.setDescription(propertyDtoReceive.getDescription());
         property.getAddress().setCep(propertyDtoReceive.getAddress().getCep());
         property.getAddress().setNumber(propertyDtoReceive.getAddress().getNumber());

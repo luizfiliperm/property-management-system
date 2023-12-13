@@ -27,9 +27,6 @@ public class Property {
     @Column(name = "contact")
     private String contact;
 
-    @Column(name = "number_of_units")
-    private Integer numberOfUnits;
-
     @Column(name = "description")
     private String description;
 

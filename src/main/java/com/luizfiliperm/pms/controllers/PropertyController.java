@@ -42,7 +42,7 @@ public class PropertyController {
     }
 
     @PutMapping
-    public ResponseEntity<PropertyDtoResponse> updateProperty(@PathVariable Long propertyId, @Valid @RequestBody PropertyDtoReceive propertyDtoReceive, Authentication authentication){
+    public ResponseEntity<PropertyDtoResponse> updateProperty(@Valid @RequestBody PropertyDtoReceive propertyDtoReceive, Authentication authentication){
         return ResponseEntity.status(HttpStatus.OK).body(propertyService.update(AuthUtil.retrievePropertyFromAuthentication(authentication), propertyDtoReceive));
     }
 }

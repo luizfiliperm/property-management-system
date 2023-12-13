@@ -20,8 +20,6 @@ public class PropertyDtoReceive {
     @NotBlank(message = "The contact is required")
     private String contact;
 
-    private Integer numberOfUnits;
-
     @NotBlank(message = "The description is required")
     private String description;
 
@@ -32,7 +30,6 @@ public class PropertyDtoReceive {
     public PropertyDtoReceive(Property property){
         this.name = property.getName();
         this.contact = property.getContact();
-        this.numberOfUnits = property.getNumberOfUnits();
         this.description = property.getDescription();
         this.address = new AddressDto(property.getAddress());
     }
@@ -41,7 +38,6 @@ public class PropertyDtoReceive {
         Property property = new Property();
         property.setName(this.name);
         property.setContact(this.contact);
-        property.setNumberOfUnits(this.numberOfUnits);
         property.setDescription(this.description);
         property.setAddress(this.address.convertToAddress());
         return property;
