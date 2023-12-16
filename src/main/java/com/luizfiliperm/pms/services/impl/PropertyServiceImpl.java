@@ -46,6 +46,12 @@ public class PropertyServiceImpl implements PropertyService {
     }
 
     @Override
+    public PropertyDtoResponse save(PropertyDtoReceive propertyDtoReceive, Long userId) {
+        User user = userRepository.findById(userId).orElseThrow(() -> new PmsException("User not found with id: " + userId, HttpStatus.NOT_FOUND));
+        return this.save(propertyDtoReceive, user);
+    }
+
+    @Override
     public PropertyDtoResponse findById(Long id) {
         return new PropertyDtoResponse(propertyRepository.findById(id).orElseThrow(() -> new PmsException("Property not found with id: " + id, HttpStatus.NOT_FOUND)));
     }

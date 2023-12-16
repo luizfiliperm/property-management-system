@@ -10,6 +10,8 @@ public interface PropertyService {
 
     PropertyDtoResponse save(PropertyDtoReceive propertyDtoReceive, User user);
 
+    PropertyDtoResponse save(PropertyDtoReceive propertyDtoReceive, Long userId);
+
     PropertyDtoResponse findById(Long id);
 
     PageResponse<PropertyDtoResponse> findAll(int page, int size, String sortBy, String sortDir);
